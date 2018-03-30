@@ -52,9 +52,13 @@ var SearchBox = React.createClass({
         return (
             <div>
                 <input type="text" ref="query" />
-                <select ref="category">
-                    <option value="software">Apps</option>
-                    <option value="movie">Films</option>
+                <select ref="menutype">
+                    <option value="flowers">Flowers</option>
+                    <option value="concentrates">Concentrates</option>
+                    <option value="edibles">Edibles</option>
+                    <option value="prerolls">Pre-rolls</option>
+                    <option value="topicals">Topicals</option>
+                    <option value="growers">Growers</option>
                 </select>
                 <input type="submit" onClick={this.createAjax} />
             </div>
@@ -62,8 +66,8 @@ var SearchBox = React.createClass({
     },
     createAjax: function(){
         var query    = ReactDOM.findDOMNode(this.refs.query).value;
-        var category = ReactDOM.findDOMNode(this.refs.category).value;
-        var URL      = 'https://itunes.apple.com/search?term=' + query +'&country=us&entity=' + category;
+        var menutype = ReactDOM.findDOMNode(this.refs.menutype).value;
+        var URL      = 'www.wpdispensary.com/demo/wp-json/wp/v2/' + menutype + '?search=' + query;
         this.props.search(URL)
     }
 });
