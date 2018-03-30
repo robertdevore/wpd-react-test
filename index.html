@@ -4,6 +4,10 @@
 <title>WP Dispensary API Test</title>
 </head>
 <body>
+  <div class="page-title">
+    <h1>REACT.js Search Example</h1>
+    <h3>Powered by <a href="https://www.wpdispensary.com/" target="_blank">WP Dispensary</a></h3>
+  </div><!-- /.page-title -->
 <div id="content"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="dist/react.js"></script>
@@ -84,4 +88,53 @@ var ResultItem = React.createClass({
 });
 ReactDOM.render(<App />,  document.getElementById("content"));
 </script>
+
+<style type="text/css">
+/**
+ * Adding basic page styles here
+ * @TODO move this to proper style.css file
+ */
+* {
+  border-style: border-box;
+}
+body {
+  background: #eee;
+  padding: 0;
+  margin: 0;
+  color: #454545;
+  font-family: 'Open Sans', Arial, sans-serif;
+}
+/** Title font-family */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Open Sans', Arial, sans-serif;
+}
+
+/** Links */
+a { outline: none; }
+a,
+a:visited {
+  color: #76bd43;
+  text-decoration: none;
+}
+a:hover {
+  color: #454545;
+}
+
+/** WPD page title */
+.page-title {
+  margin: 24px auto;
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+}
+
+/** Content wrapper */
+#content {
+  margin: 24px auto;
+  width: 100%;
+  max-width: 700px;
+  padding: 20px;
+  background: #FFF;
+}
+</style>
 </html>
