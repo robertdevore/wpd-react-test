@@ -5,13 +5,13 @@
 </head>
 <body>
 <div id="content"></div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>   
-<script src="https://fb.me/react-0.14.6.js"></script>
-<script src="https://fb.me/react-dom-0.14.6.js"></script>
-<script src="http://fb.me/JSXTransformer-0.12.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="dist/react.js"></script>
+<script src="dist/react-dom.js"></script>
+<script src="dist/JSXTransformer.js"></script>
 <script type="text/jsx">
 var App = React.createClass({
-    
+
     getInitialState: function() {
         return {
             searchResults: []
@@ -22,7 +22,7 @@ var App = React.createClass({
             searchResults: response.results
         })
     },
-    
+
     search: function(URL){
         $.ajax({
             type: "GET",
@@ -43,7 +43,7 @@ var App = React.createClass({
     },
 });
 var SearchBox = React.createClass({
-    
+
     render: function(){
         return (
             <div>
@@ -64,7 +64,7 @@ var SearchBox = React.createClass({
     }
 });
 var Results = React.createClass({
-    
+
     render: function(){
         var resultItems = this.props.searchResults.map(function(result) {
             return <ResultItem key={result.trackId} trackName={result.trackName} />
@@ -72,12 +72,12 @@ var Results = React.createClass({
         return(
             <ul>
                 {resultItems}
-            </ul>           
+            </ul>
         );
     }
 });
 var ResultItem = React.createClass({
-    
+
     render: function(){
         return <li>{this.props.trackName}</li>;
     }
