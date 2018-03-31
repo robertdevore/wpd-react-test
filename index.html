@@ -30,7 +30,7 @@ var App = React.createClass({
     search: function(URL){
         $.ajax({
             type: "GET",
-            dataType: 'jsonp',
+            dataType: 'json',
             url: URL,
             success: function(response){
                 this.showResults(response);
@@ -51,8 +51,8 @@ var SearchBox = React.createClass({
     render: function(){
         return (
             <div>
-                <input type="text" ref="query" />
-                <select ref="menutype">
+                <input type="text" ref="query" class="wpd-item-name" placeholder="Product name..." />
+                <select ref="menutype" class="wpd-menu-types">
                     <option value="flowers">Flowers</option>
                     <option value="concentrates">Concentrates</option>
                     <option value="edibles">Edibles</option>
@@ -60,7 +60,7 @@ var SearchBox = React.createClass({
                     <option value="topicals">Topicals</option>
                     <option value="growers">Growers</option>
                 </select>
-                <input type="submit" onClick={this.createAjax} />
+                <input type="submit" class="wpd-item-search" onClick={this.createAjax} />
             </div>
         );
     },
@@ -75,10 +75,10 @@ var Results = React.createClass({
 
     render: function(){
         var resultItems = this.props.searchResults.map(function(result) {
-            return <ResultItem key={result.trackId} trackName={result.trackName} />
+            return <ResultItem key={result.ID} productName={result.title} />
         });
         return(
-            <ul>
+            <ul class="wpd-search-results">
                 {resultItems}
             </ul>
         );
@@ -87,7 +87,7 @@ var Results = React.createClass({
 var ResultItem = React.createClass({
 
     render: function(){
-        return <li>{this.props.trackName}</li>;
+        return <li>{this.props.slug}</li>;
     }
 });
 ReactDOM.render(<App />,  document.getElementById("content"));
@@ -139,6 +139,37 @@ a:hover {
   max-width: 700px;
   padding: 20px;
   background: #FFF;
+}
+
+/** Form styles */
+#content input[type="text"],
+#content select {
+    width: 40%;
+    margin-right: 1%;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 2px;
+    margin-right: 1%;
+    width: 40%;
+    background: #FFF;
+    color: #777;
+}
+#content input[type="submit"] {
+    width: 18%;
+    margin:0;
+    border-radius: 2px;
+    border:1px solid #76bd43;
+    background: #76bd43;
+    color: #FFF;
+    padding: 10px;
+    width: 18%;
+    margin: 0;
+}
+#content input[type="submit"]:hover {
+  background: #454545;
+  color: #FFF;
+  border: 1px solid #454545;
+  cursor: pointer;
 }
 </style>
 </html>
