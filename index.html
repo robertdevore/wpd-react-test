@@ -1,97 +1,12 @@
-<!-- DOCTYPE HTML -->
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <title>WP Dispensary API Test</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <div class="page-title">
-    <h1>REACT.js Search Example</h1>
-    <h3>Powered by <a href="https://www.wpdispensary.com/" target="_blank">WP Dispensary</a></h3>
-  </div><!-- /.page-title -->
-<div id="content"></div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="dist/react.js"></script>
-<script src="dist/react-dom.js"></script>
-<script src="dist/JSXTransformer.js"></script>
-<script type="text/jsx">
-var App = React.createClass({
-
-    getInitialState: function() {
-        return {
-            searchResults: []
-        }
-    },
-    showResults: function(response){
-        this.setState({
-            searchResults: response.results
-        })
-    },
-
-    search: function(URL){
-        $.ajax({
-            type: "GET",
-            dataType: 'json',
-            url: URL,
-            success: function(response){
-                this.showResults(response);
-            }.bind(this)
-        });
-    },
-    render: function(){
-        return (
-            <div>
-                <SearchBox search={this.search} />
-                <Results searchResults={this.state.searchResults} />
-            </div>
-        );
-    },
-});
-var SearchBox = React.createClass({
-
-    render: function(){
-        return (
-            <div>
-                <input type="text" ref="query" class="wpd-item-name" placeholder="Product name..." />
-                <select ref="menutype" class="wpd-menu-types">
-                    <option value="flowers">Flowers</option>
-                    <option value="concentrates">Concentrates</option>
-                    <option value="edibles">Edibles</option>
-                    <option value="prerolls">Pre-rolls</option>
-                    <option value="topicals">Topicals</option>
-                    <option value="growers">Growers</option>
-                </select>
-                <input type="submit" class="wpd-item-search" onClick={this.createAjax} />
-            </div>
-        );
-    },
-    createAjax: function(){
-        var query    = ReactDOM.findDOMNode(this.refs.query).value;
-        var menutype = ReactDOM.findDOMNode(this.refs.menutype).value;
-        var URL      = 'www.wpdispensary.com/demo/wp-json/wp/v2/' + menutype + '?search=' + query;
-        this.props.search(URL)
-    }
-});
-var Results = React.createClass({
-
-    render: function(){
-        var resultItems = this.props.searchResults.map(function(result) {
-            return <ResultItem key={result.ID} productName={result.title} />
-        });
-        return(
-            <ul class="wpd-search-results">
-                {resultItems}
-            </ul>
-        );
-    }
-});
-var ResultItem = React.createClass({
-
-    render: function(){
-        return <li>{this.props.slug}</li>;
-    }
-});
-ReactDOM.render(<App />,  document.getElementById("content"));
-</script>
 
 <style type="text/css">
 /**
@@ -99,7 +14,7 @@ ReactDOM.render(<App />,  document.getElementById("content"));
  * @TODO move this to proper style.css file
  */
 * {
-  border-style: border-box;
+  box-sizing: border-box;
 }
 body {
   background: #eee;
@@ -125,7 +40,8 @@ a:hover {
 }
 
 /** WPD page title */
-.page-title {
+.page-title,
+.page-footer {
   margin: 24px auto;
   width: 100%;
   max-width: 700px;
@@ -171,5 +87,116 @@ a:hover {
   border: 1px solid #454545;
   cursor: pointer;
 }
+#content ul {
+  margin: 0;
+}
+#content li {
+  list-style-type: none;
+  margin: 2.5px 0;
+  padding: 2.5px 0;
+}
+
+/** Page footer */
+.page-footer h3 {
+  color: #909090;
+  font-weight: 400;
+  font-size: 14px;
+}
 </style>
+
+<div class="page-title">
+  <h1>Dispensary Menu Search Example</h1>
+</div><!-- /.page-title -->
+
+<div id="content" class="wpd-search"></div>
+
+<div class="page-footer">
+  <h3>Powered by <a href="https://www.wpdispensary.com/" target="_blank">WP Dispensary</a></h3>
+</div><!-- /.page-footer -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="dist/react.js"></script>
+<script src="dist/react-dom.js"></script>
+<script src="dist/JSXTransformer.js"></script>
+<script type="text/jsx">
+var App = React.createClass({
+
+    getInitialState: function() {
+        return {
+            searchResults: []
+        }
+    },
+    showResults: function(response){
+        this.setState({
+            searchResults: response.results
+        })
+    },
+
+    search: function(URL){
+        $.ajax({
+            type: "GET",
+            dataType: 'jsonp',
+            url: URL,
+            success: function(response){
+                this.showResults(response);
+            }.bind(this)
+        });
+    },
+    render: function(){
+        return (
+            <div>
+                <SearchBox search={this.search} />
+                <Results searchResults={this.state.searchResults} />
+            </div>
+        );
+    },
+});
+var SearchBox = React.createClass({
+
+    render: function(){
+        return (
+            <div>
+                <input type="text" ref="query" placeholder="Product name..." />
+                <select ref="menutype">
+                    <option value="flowers">Flowers</option>
+                    <option value="concentrates">Concentrates</option>
+                    <option value="edibles">Edibles</option>
+                    <option value="prerolls">Pre-rolls</option>
+                    <option value="topicals">Topicals</option>
+                    <option value="growers">Growers</option>
+                </select>
+                <input type="submit" onClick={this.createAjax} />
+            </div>
+        );
+    },
+    createAjax: function(){
+        var query    = ReactDOM.findDOMNode(this.refs.query).value;
+        var menutype = ReactDOM.findDOMNode(this.refs.menutype).value;
+        var URL      = 'www.wpdispensary.com/demo/wp-json/wp/v2/' + menutype +'?search=' + query;
+        this.props.search(URL)
+    }
+});
+var Results = React.createClass({
+
+    render: function(){
+        var resultItems = this.props.searchResults.map(function(result) {
+            return <ResultItem key={result.ID} productName={result.slug} />
+        });
+        return(
+            <ul>
+                {resultItems}
+            </ul>
+        );
+    }
+});
+var ResultItem = React.createClass({
+
+    render: function(){
+        return <li>{this.props.title}</li>;
+    }
+});
+ReactDOM.render(<App />,  document.getElementById("content"));
+</script>
+
+</body>
 </html>
